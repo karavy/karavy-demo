@@ -73,7 +73,6 @@ spec:
                 - additionalArgs
                 - antiAffinity
                 - certificateDurationHours
-                - keycloak
                 - replicas
                 type: object
               tenantControllerManager:
