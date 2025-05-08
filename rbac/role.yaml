@@ -8,20 +8,11 @@ rules:
   - ""
   resources:
   - configmaps
+  - events
   - namespaces
+  - persistentvolumeclaims
   - secrets
   - services
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - events
-  - persistentvolumeclaims
   verbs:
   - create
   - delete
@@ -40,6 +31,7 @@ rules:
   - delete
   - get
   - list
+  - update
   - watch
 - apiGroups:
   - cert-manager.io
