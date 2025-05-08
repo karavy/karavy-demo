@@ -62,9 +62,6 @@ spec:
                         items:
                           type: string
                         type: array
-                    required:
-                    - enabled
-                    - oidcArgs
                     type: object
                   replicas:
                     description: numero di repliche del pod
