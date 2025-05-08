@@ -1,0 +1,23 @@
+# permissions for end users to view k8stenants.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: karavy-core
+    app.kubernetes.io/managed-by: kustomize
+  name: k8stenant-viewer-role
+rules:
+- apiGroups:
+  - tenants.karavy.io
+  resources:
+  - k8stenants
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - tenants.karavy.io
+  resources:
+  - k8stenants/status
+  verbs:
+  - get

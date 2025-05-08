@@ -1,0 +1,79 @@
+apiVersion: tenants.karavy.io/v1
+kind: K8sTenant 
+metadata:
+  name: tenant-4
+  labels:
+    tenant-name: tenant-4
+spec:
+  # CAMPI MODIFICABILI E RILETTI A CALDO
+  # versione kubernetes
+  # versione crio
+  # versione etcd
+  # additional args
+  # replicas di etcd, api server, scheduler, controller manager 
+  # cniApplication.version
+  # CAMPI CHE RICHIEDONO LA DISTRUZIONE DEL CLUSTER
+  # podNetwork e ServiceNetwork
+  # cniApplication.type
+  # cniApplication.id
+  # tenantEtcdServer.storageClassName
+  #useKaravyNet: true # TODO: se true inserisce nel crd di karavy-net il nodo/cluster aggiunto
+  tenantNetwork:
+    podNetwork: 10.120.0.0
+    podCidr: 16
+    serviceNetwork: 10.240.0.0
+    serviceCidr: 16
+    # di default è il primo indirizzo della rete selezionata
+    kubeDefaultSvc: 10.240.0.1
+    tenantKubeDNSIP: 10.240.0.10
+    tenantKubeDomain: tenant-4.local
+    cniApplication:
+      #type: cilium
+      #version: 1.16.5
+      #id: 4
+      type: calico
+      version: v3.29.2
+  tenantVersions:
+    tenantKubeVersion: v1.31.5
+    tenantCrioVersion: v1.31.5
+    tenantEtcdVersion: v3.5.18 
+  kubeMasterDomain: cluster.local
+  winNodeSupport: true
+  tenantApiServer:
+    certificateDurationHours: 8760
+    antiAffinity: true
+    replicas: 1
+    additionalArgs:
+      - --v=10
+    keycloak:
+      # deve esistere un certificato client per keycloak che si chiama "keycloak-client-secret"
+      # se enabled monta il secret come volume
+      enabled: false
+      oidcArgs:
+      - --oidc-issuer-url=https://keycloak.keycloak.svc.cluster.local:8443/realms/local
+      - --oidc-client-id=gatekeeper
+      - --oidc-username-claim=email
+      - --oidc-groups-claim=groups
+      - --oidc-ca-file=/etc/kubernetes/ssl/ca.crt
+  tenantEtcdServer:
+    certificateDurationHours: 8760
+    antiAffinity: true
+    replicas: 3
+    additionalArgs:
+      - --initial-advertise-peer-urls=$(URI_SCHEME)://$(HOSTNAME).$(SERVICE_NAME).$(K8S_NAMESPACE):2380
+    storageClassName: "nfs-csi"
+    storageSize: 10Gi
+  tenantControllerManager:
+    certificateDurationHours: 8760
+    antiAffinity: true
+    replicas: 1
+  tenantScheduler:
+    certificateDurationHours: 8760
+    antiAffinity: true
+    replicas: 1
+  tenantDNSServer:
+    certificateDurationHours: 8760
+  workerCertificates:
+    certificateDurationHours: 8760
+  usersCertificates:
+    certificateDurationHours: 8760
