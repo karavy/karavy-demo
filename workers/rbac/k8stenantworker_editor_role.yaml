@@ -1,0 +1,27 @@
+# permissions for end users to edit k8stenantworkers.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: karavy-workers
+    app.kubernetes.io/managed-by: kustomize
+  name: k8stenantworker-editor-role
+rules:
+- apiGroups:
+  - tenants.karavy.io
+  resources:
+  - k8stenantworkers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tenants.karavy.io
+  resources:
+  - k8stenantworkers/status
+  verbs:
+  - get

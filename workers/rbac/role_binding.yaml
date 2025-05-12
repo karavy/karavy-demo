@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/name: karavy-workers
+    app.kubernetes.io/managed-by: kustomize
+  name: karavy-workers-manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: karavy-workers-manager-role
+subjects:
+- kind: ServiceAccount
+  name: karavy-workers
+  namespace: karavy-workers
