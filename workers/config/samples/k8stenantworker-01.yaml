@@ -1,0 +1,12 @@
+apiVersion: tenants.karavy.io/v1
+kind: K8sTenantWorker
+metadata:
+  name: tenant-1-worker-01
+  namespace: tenant-1
+spec:
+  tenantName: tenant-1
+  hostname: worker-01
+  hostIP: 172.25.58.100
+  sshKeySecret: sshkey
+  operatingSystem: ubuntu2404
+  sshPort: 22
