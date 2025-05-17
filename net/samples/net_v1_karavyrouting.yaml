@@ -1,0 +1,25 @@
+apiVersion: net.karavy.io/v1
+kind: KaravyRouting
+metadata:
+  labels:
+    app.kubernetes.io/name: karavy-net
+    app.kubernetes.io/managed-by: kustomize
+  name: karavy-tenant-1-routing
+  namespace: karavy-net
+spec:
+  tenantName: tenant-1
+  mainServiceCidr: 10.96.0.0/12
+  mainPodCidr: 10.244.0.0/16
+  mainCNIType: userdefined
+  mainClusterNodes:
+  - mainClusterNodeType: controlplane
+    name: kavary-main-cluster
+    servicePriority: 10
+  tenantServiceCidr: 10.240.0.0/16  
+  tenantCNIType: calico
+  tenantClusterNodes:
+  - ip: 172.25.58.100
+    name: worker-01
+    servicePriority: 10
+    sshKey: sshkey
+    sshPort: 22

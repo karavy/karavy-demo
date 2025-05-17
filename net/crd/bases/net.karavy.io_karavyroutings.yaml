@@ -1,0 +1,111 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.16.1
+  name: karavyroutings.net.karavy.io
+spec:
+  group: net.karavy.io
+  names:
+    kind: KaravyRouting
+    listKind: KaravyRoutingList
+    plural: karavyroutings
+    singular: karavyrouting
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: KaravyRouting is the Schema for the karavyroutings API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: KaravyRoutingSpec defines the desired state of KaravyRouting
+            properties:
+              mainCNIType:
+                description: Foo is an example field of KaravyRouting. Edit karavyrouting_types.go
+                  to remove/update
+                type: string
+              mainClusterNodes:
+                items:
+                  properties:
+                    mainClusterNodeType:
+                      type: string
+                    name:
+                      type: string
+                    servicePriority:
+                      type: integer
+                  required:
+                  - mainClusterNodeType
+                  - name
+                  - servicePriority
+                  type: object
+                type: array
+              mainPodCidr:
+                type: string
+              mainServiceCidr:
+                type: string
+              tenantCNIType:
+                type: string
+              tenantClusterNodes:
+                items:
+                  properties:
+                    ip:
+                      type: string
+                    name:
+                      type: string
+                    servicePriority:
+                      type: integer
+                    sshKey:
+                      type: string
+                    sshPort:
+                      type: integer
+                  required:
+                  - ip
+                  - name
+                  - servicePriority
+                  - sshKey
+                  - sshPort
+                  type: object
+                type: array
+              tenantName:
+                type: string
+              tenantPodCidr:
+                type: string
+              tenantServiceCidr:
+                type: string
+            required:
+            - mainCNIType
+            - mainClusterNodes
+            - mainServiceCidr
+            - tenantCNIType
+            - tenantClusterNodes
+            - tenantName
+            - tenantPodCidr
+            - tenantServiceCidr
+            type: object
+          status:
+            description: KaravyRoutingStatus defines the observed state of KaravyRouting
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
