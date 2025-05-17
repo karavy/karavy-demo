@@ -5,7 +5,7 @@ metadata:
     app.kubernetes.io/name: karavy-net
     app.kubernetes.io/managed-by: kustomize
   name: karavy-tenant-1-routing
-  namespace: karavy
+  namespace: karavy-net
 spec:
   tenantName: tenant-1
   mainServiceCidr: 10.96.0.0/12
